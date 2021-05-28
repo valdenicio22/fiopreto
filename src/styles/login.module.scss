@@ -1,0 +1,39 @@
+.container {
+  padding: 5.3rem 1.5rem 2.5rem;
+
+  .header {
+    h1 {
+      letter-spacing: 0.12rem;
+      margin-bottom: 4rem;
+    }
+  }
+  .flex {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .main {
+    .inputField {
+      width: min(100%, 310px);
+    }
+    .inputEmail {
+      margin: 1rem 0 2.2rem;
+    }
+  }
+  .btnSubmit {
+    width: min(100%, 310px);
+    margin: 2rem 0 0.8rem;
+  }
+}
+.footer {
+  p {
+    margin-bottom: 6rem;
+  }
+  a {
+    font-weight: 600;
+    color: black;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

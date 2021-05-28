@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from '@material-ui/core/styles';
+import Head from 'next/head';
 
 import theme from '../theme';
 
@@ -19,6 +20,9 @@ export default function MyApp(props) {
 
   return (
     <>
+      <Head>
+        <title>FioPreto</title>
+      </Head>
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />
       </ThemeProvider>
