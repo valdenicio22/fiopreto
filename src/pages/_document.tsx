@@ -8,6 +8,8 @@ export default class MyDocument extends Document {
     return (
       <Html lang="pt-BR">
         <Head>
+          <title>FioPreto</title>
+          <link rel="shortcut icon" href="/logo.png" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <meta name="theme-color" content={theme.palette.primary.main} />
 
