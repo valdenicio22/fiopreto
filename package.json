@@ -1,0 +1,30 @@
+{
+  "name": "fiopreto",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
+    "formik": "^2.2.8",
+    "maskjs": "^0.72.25",
+    "next": "10.2.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-dropzone": "^11.3.2",
+    "sass": "^1.34.0",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.1",
+    "@types/react": "^17.0.8",
+    "@types/yup": "^0.29.11",
+    "prettier": "^2.3.0",
+    "typescript": "^4.3.2"
+  }
+}
