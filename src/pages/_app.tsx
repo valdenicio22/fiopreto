@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Head from 'next/head';
 
 import theme from '../theme';
 
+import Head from 'next/head';
+
 import '../styles/global.scss';
+// import { AuthProvider } from '../contexts/AuthContext';
+import SignUpProvider from '../contexts/SignUpContext';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -22,10 +25,17 @@ export default function MyApp(props) {
     <>
       <Head>
         <title>FioPreto</title>
+        {/* <link rel="shortcut icon" href="/pwaImg.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/pwaImg.png" /> */}
       </Head>
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      {/* <AuthProvider> */}
+      <SignUpProvider>
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </SignUpProvider>
+      {/* </AuthProvider> */}
     </>
   );
 }

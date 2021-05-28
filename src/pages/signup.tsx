@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { Stepper, Step, StepLabel } from '@material-ui/core';
-import { Owner } from '../components/SignupSteps/Owner';
-// import { InfoBusiness } from '../components/SignupSteps/InfoBusiness';
-// import { AddressBusiness } from '../components/SignupSteps/AddressBusiness';
-// import { DetailsBusiness } from '../components/SignupSteps/DetailsBusiness';
+import { Owner } from '../components/SignUpSteps/Owner';
+import { InfoBusiness } from '../components/SignUpSteps/InfoBusiness';
+import { AddressBusiness } from '../components/SignUpSteps/AddressBusiness';
+import { DetailsBusiness } from '../components/SignUpSteps/DetailsBusiness';
 import { SignUpContext } from '../contexts/SignUpContext';
 
-import styles from '../styles/signup.module.scss';
+import styles from '../styles/SignUp.module.scss';
 import { FullLogoIcon } from '../components/Icons';
 
-export default function Cadastro() {
+export default function SignUp() {
   const { progress } = useContext(SignUpContext);
 
   const stepsName = [
@@ -21,9 +21,9 @@ export default function Cadastro() {
 
   const stepsForms = [
     <Owner />,
-    // <InfoBusiness />,
-    // <AddressBusiness />,
-    // <DetailsBusiness />,
+    <InfoBusiness />,
+    <AddressBusiness />,
+    <DetailsBusiness />,
   ];
 
   return (
@@ -39,7 +39,6 @@ export default function Cadastro() {
           ))}
         </Stepper>
       </div>
-
       {stepsForms[progress]}
     </div>
   );

@@ -1,5 +1,4 @@
-import React, { useState, createContext } from 'react';
-import { useCallback } from 'react';
+import React from 'react';
 
 interface Address {
   zipCode: string;
@@ -33,12 +32,12 @@ interface SignUpContextData {
   handleBack: () => void;
 }
 
-export const SignUpContext = createContext<SignUpContextData>(
+export const SignUpContext = React.createContext<SignUpContextData>(
   {} as SignUpContextData
 );
 
 const SignUpProvider: React.FC = ({ children }) => {
-  const [signUpData, setSignUpData] = useState<SignUpData>({
+  const [signUpData, setSignUpData] = React.useState<SignUpData>({
     userName: '',
     email: '',
     password: '',
@@ -56,14 +55,14 @@ const SignUpProvider: React.FC = ({ children }) => {
       city: '',
     },
   });
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = React.useState(0);
   const [selectedFile, setSelectedFile] = React.useState<File>();
 
-  const handleNext = useCallback(() => {
+  const handleNext = React.useCallback(() => {
     setProgress(progress + 1);
   }, [progress]);
 
-  const handleBack = useCallback(() => {
+  const handleBack = React.useCallback(() => {
     setProgress(progress - 1);
   }, [progress]);
 

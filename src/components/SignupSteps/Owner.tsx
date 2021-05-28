@@ -1,12 +1,12 @@
 import React from 'react';
+import { Buttons } from './Buttons';
+
 import { TextField } from '@material-ui/core';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import styles from './styles.module.scss';
-import { Buttons } from './Buttons';
-import { useContext } from 'react';
 import { SignUpContext } from '../../contexts/SignUpContext';
 
 const validationSchema = yup.object({
@@ -21,14 +21,15 @@ const validationSchema = yup.object({
   password: yup
     .string()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/g,
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
       '*Senhas devem conter 8 caracteres e no mínimo 1 letra maíuscula, número e caracter especial (Ex: *, &, $,)'
     )
     .required('Senha é um campo obrigatório'),
 });
 
 export const Owner = () => {
-  const { signUpData, setSignUpData, handleNext } = useContext(SignUpContext);
+  const { signUpData, setSignUpData, handleNext } =
+    React.useContext(SignUpContext);
 
   const formik = useFormik({
     initialValues: {
