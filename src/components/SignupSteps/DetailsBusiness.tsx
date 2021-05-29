@@ -38,13 +38,10 @@ export const DetailsBusiness = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log('hauhsuauhsua', imgInfo);
       setSignUpData({ ...signUpData, ...values, ...imgInfo });
       handleFinish();
     },
   });
-
-  console.log(signUpData);
 
   const handleFinish = () => {
     console.log(signUpData);
