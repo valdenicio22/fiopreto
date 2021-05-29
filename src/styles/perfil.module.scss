@@ -1,0 +1,27 @@
+.perfilContainer {
+  display: flex;
+  flex-direction: column;
+
+  padding: 2.5rem 1.5rem;
+
+  .perfilHeader {
+    display: flex;
+    justify-content: center;
+  }
+  .perfilDrawer {
+    width: 100%;
+    margin: 1.5rem 0 3.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .perfilInformations {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+
+    .perfilBtn {
+      margin-bottom: 2rem;
+    }
+  }
+}
