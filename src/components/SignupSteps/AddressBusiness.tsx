@@ -16,11 +16,11 @@ const handleCepMask = (value) => {
 };
 
 const validationSchema = yup.object({
-  zipCode: yup.string().required(),
-  street: yup.string().required(),
-  number: yup.string().required(),
-  complement: yup.string().required(),
-  city: yup.string().required(),
+  zipCode: yup.string().required('CEP é um campo obrigatório'),
+  street: yup.string().required('Rua é um campo obrigatório'),
+  number: yup.string().required('Number é um campo obrigatório'),
+  complement: yup.string().required('Complemento é um campo obrigatório'),
+  city: yup.string().required('Cidade é um campo obrigatório'),
 });
 
 export const AddressBusiness = () => {
@@ -62,7 +62,6 @@ export const AddressBusiness = () => {
           id="zipCode"
           className={styles.textField}
           name="zipCode"
-          type="text"
           label="CEP*"
           variant="outlined"
           fullWidth
@@ -78,8 +77,7 @@ export const AddressBusiness = () => {
           id="street"
           className={styles.textField}
           name="street"
-          type="text"
-          label="street*"
+          label="Rua*"
           variant="outlined"
           fullWidth
           value={formik.values.street}
@@ -92,9 +90,9 @@ export const AddressBusiness = () => {
             id="number"
             className={styles.small}
             name="number"
-            type="text"
             label="Número*"
             variant="outlined"
+            value={formik.values.number}
             onChange={formik.handleChange}
             error={formik.touched.number && Boolean(formik.errors.number)}
             helperText={formik.touched.number && formik.errors.number}
@@ -104,7 +102,7 @@ export const AddressBusiness = () => {
             className={styles.small}
             name="complement"
             type="text"
-            label="complement"
+            label="Complemento*"
             variant="outlined"
             value={formik.values.complement}
             onChange={formik.handleChange}
@@ -119,7 +117,7 @@ export const AddressBusiness = () => {
           className={styles.textField}
           name="city"
           type="text"
-          label="city*"
+          label="Cidade*"
           variant="outlined"
           fullWidth
           value={formik.values.city}

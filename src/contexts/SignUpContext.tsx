@@ -12,6 +12,7 @@ interface SignUpData {
   userName: string;
   email: string;
   password: string;
+  date: string;
   businessName: string;
   cnpj: string;
   phoneNumber: string;
@@ -19,15 +20,19 @@ interface SignUpData {
   img: string;
   key_img: string;
   address: Address;
+  opening: string;
+  closure: string;
 }
 
 interface SignUpContextData {
   signUpData: SignUpData;
   progress: number;
   selectedFile: File;
+  loading: boolean;
   setSelectedFile: React.Dispatch<React.SetStateAction<File>>;
   setSignUpData: React.Dispatch<React.SetStateAction<SignUpData>>;
   setProgress: React.Dispatch<React.SetStateAction<number>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   handleNext: () => void;
   handleBack: () => void;
 }
@@ -41,12 +46,15 @@ const SignUpProvider: React.FC = ({ children }) => {
     userName: '',
     email: '',
     password: '',
+    date: '',
     businessName: '',
     cnpj: '',
     phoneNumber: '',
     website: '',
     img: '',
     key_img: '',
+    opening: '',
+    closure: '',
     address: {
       zipCode: '',
       street: '',
@@ -56,6 +64,7 @@ const SignUpProvider: React.FC = ({ children }) => {
     },
   });
   const [progress, setProgress] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState<File>();
 
   const handleNext = React.useCallback(() => {
@@ -74,11 +83,13 @@ const SignUpProvider: React.FC = ({ children }) => {
         signUpData,
         progress,
         selectedFile,
+        loading,
         setSignUpData,
         setProgress,
         handleNext,
         handleBack,
         setSelectedFile,
+        setLoading,
       }}
     >
       {children}

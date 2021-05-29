@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 
 import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import { api } from '../../services/api';
+import { SignUpContext } from '../../contexts/SignUpContext';
 
 interface Props {
   onFileUploaded: (file: File) => void;
@@ -16,6 +17,8 @@ interface imgResponseData {
 }
 
 const Dropzone: React.FC<Props> = ({ onFileUploaded, onFileUploaded2 }) => {
+  const { setLoading } = React.useContext(SignUpContext);
+
   const [selectedFileUrl, setSelectedFileUrl] = useState('');
 
   const onDrop = useCallback(
@@ -26,24 +29,24 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded, onFileUploaded2 }) => {
       if (file) {
         data.append('file', file, file.name);
       }
+      setLoading(true);
       api
         .post<imgResponseData>('/image', data)
         .then((response) => {
-          console.log(`A imagem ${file.name} j foi enviada para o servidor!`);
+          console.log(`A imagem ${file.name} já foi enviada para o servidor!`);
           onFileUploaded2({
             img: response.data.url,
             key_img: response.data.key,
           });
+          setLoading(false);
         })
         .catch((err) => {
+          setLoading(false);
           console.log(err);
         });
 
       const fileUrl = URL.createObjectURL(file);
-
       setSelectedFileUrl(fileUrl);
-
-      onFileUploaded(file);
     },
     [onFileUploaded]
   );

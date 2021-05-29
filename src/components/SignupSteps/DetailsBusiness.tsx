@@ -5,21 +5,25 @@ import { SignUpContext } from '../../contexts/SignUpContext';
 
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import { maskJs } from 'mask-js';
 
 import Dropzone from '../Dropzone';
 
 import styles from './styles.module.scss';
 import { Buttons } from './Buttons';
+import Router from 'next/router';
+
+const handleTimerMask = (value) => {
+  return maskJs('99:99', value.replace(/[^0-9]/g, ''));
+};
 
 const validationSchema = yup.object({
-  abertura: yup.string().required('Hora de Abertura é um campo obrigatório'),
-  fechamento: yup
-    .string()
-    .required('Hora de Fechamento é um campo obrigatório'),
+  opening: yup.string().required('Hora de Abertura é um campo obrigatório'),
+  closure: yup.string().required('Hora de Fechamento é um campo obrigatório'),
 });
 
 export const DetailsBusiness = () => {
-  const { signUpData, setSignUpData, handleNext, setSelectedFile } =
+  const { signUpData, setSignUpData, setProgress, setSelectedFile } =
     React.useContext(SignUpContext);
 
   const [imgInfo, setImgInfo] = React.useState({
@@ -29,16 +33,58 @@ export const DetailsBusiness = () => {
 
   const formik = useFormik({
     initialValues: {
-      abertura: '',
-      fechamento: '',
+      opening: signUpData.opening,
+      closure: signUpData.closure,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      console.log('hauhsuauhsua', imgInfo);
       setSignUpData({ ...signUpData, ...values, ...imgInfo });
-      handleNext();
-      // console.log(JSON.stringify(values));
+      handleFinish();
     },
   });
+
+  console.log(signUpData);
+
+  const handleFinish = () => {
+    console.log(signUpData);
+
+    // let unmask = (value) => {
+    //   return value.replace(/[.]/g, '').replace(/[-]/g, '').replace(/[/]/g, '');
+    // }
+
+    // const formData = new FormData();
+
+    // formData.append('document', {
+    //   name: selectedFile.name,
+    //   path: selectedFile.path,
+    //   size: selectedFile.size,
+    //   type: selectedFile.type,
+    // });
+    // formData.append('signUpData', signUpData);
+
+    Router.push('/login');
+
+    setProgress(0);
+    // setSignUpData({
+    //   userName: '',
+    //   email: '',
+    //   password: '',
+    //   businessName: '',
+    //   cnpj: '',
+    //   phoneNumber: '',
+    //   website: '',
+    //   img: '',
+    //   key_img: '',
+    //   address: {
+    //     zipCode: '',
+    //     street: '',
+    //     number: '',
+    //     complement: '',
+    //     city: '',
+    //   },
+    // });
+  };
 
   return (
     <>
@@ -50,29 +96,30 @@ export const DetailsBusiness = () => {
           />
           <div className={styles.smallTextField}>
             <TextField
-              id="abertura"
+              id="opening"
               className={styles.small}
-              name="abertura"
-              type="text"
+              name="opening"
               label="Abertura*"
               variant="outlined"
-              onChange={formik.handleChange}
-              error={formik.touched.abertura && Boolean(formik.errors.abertura)}
-              helperText={formik.touched.abertura && formik.errors.abertura}
+              value={formik.values.opening}
+              onChange={(e) =>
+                formik.handleChange('opening')(handleTimerMask(e.target.value))
+              }
+              error={formik.touched.opening && Boolean(formik.errors.opening)}
+              helperText={formik.touched.opening && formik.errors.opening}
             />
             <TextField
-              id="fechamento"
+              id="closure"
               className={styles.small}
-              name="fechamento"
-              type="text"
+              name="closure"
               label="Fechamento*"
               variant="outlined"
-              fullWidth
-              onChange={formik.handleChange}
-              error={
-                formik.touched.fechamento && Boolean(formik.errors.fechamento)
+              value={formik.values.closure}
+              onChange={(e) =>
+                formik.handleChange('closure')(handleTimerMask(e.target.value))
               }
-              helperText={formik.touched.fechamento && formik.errors.fechamento}
+              error={formik.touched.closure && Boolean(formik.errors.closure)}
+              helperText={formik.touched.closure && formik.errors.closure}
             />
           </div>
         </div>

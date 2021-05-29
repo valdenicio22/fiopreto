@@ -12,11 +12,11 @@ import { SignUpContext } from '../../contexts/SignUpContext';
 const validationSchema = yup.object({
   userName: yup
     .string()
-    .min(3, 'Nome deve conter no mínimo 3 letras!')
+    .min(3, 'Nome deve conter no mínimo 3 letras')
     .required('Nome é um campo obrigatório'),
   email: yup
     .string()
-    .email('Invalid email')
+    .email('Email Inválido')
     .required('Email é um campo obrigatório'),
   password: yup
     .string()
@@ -25,6 +25,7 @@ const validationSchema = yup.object({
       '*Senhas devem conter 8 caracteres e no mínimo 1 letra maíuscula, número e caracter especial (Ex: *, &, $,)'
     )
     .required('Senha é um campo obrigatório'),
+  date: yup.string().required('Aniversario é um campo obrigatório'),
 });
 
 export const Owner = () => {
@@ -36,12 +37,13 @@ export const Owner = () => {
       userName: signUpData.userName,
       email: signUpData.email,
       password: signUpData.password,
+      date: signUpData.date,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      console.log(values);
       setSignUpData({ ...signUpData, ...values });
       handleNext();
-      // console.log(JSON.stringify(values));
     },
   });
 
@@ -85,6 +87,20 @@ export const Owner = () => {
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
+        />
+        <TextField
+          id="date"
+          className={styles.textField}
+          label="Data de Nascimento"
+          type="date"
+          // defaultValue="2017-05-24"
+          // InputLabelProps={{
+          //   shrink: true,
+          // }}
+          value={formik.values.date}
+          onChange={formik.handleChange}
+          error={formik.touched.date && Boolean(formik.errors.date)}
+          helperText={formik.touched.date && formik.errors.date}
         />
         <span>*Mínimo de 8 caracteres</span>
       </div>

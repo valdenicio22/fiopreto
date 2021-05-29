@@ -10,10 +10,10 @@ import styles from './styles.module.scss';
 import { Buttons } from './Buttons';
 
 const handlePhoneMask = (value) => {
-  console.log(value);
-  if (value.length < 15) {
-    return maskJs('(99) 9999-9999', value.replace(/[^0-9]/g, ''));
-  }
+  // console.log(value);
+  // if (value.length < 15) {
+  //   return maskJs('(99) 9999-9999', value.replace(/[^0-9]/g, ''));
+  // }
   return maskJs('(99) 9 9999-9999', value.replace(/[^0-9]/g, ''));
 };
 
@@ -24,17 +24,15 @@ const handleCnpjMask = (value) => {
 const validationSchema = yup.object({
   businessName: yup
     .string()
-    .min(3, 'Too Short!')
+    .min(3, 'Nome da empresa deve conter no mínimo 3 letras!')
     .required('Nome da empresa é um campo obrigatório'),
   cnpj: yup.string(),
   // .matches(
   //   /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/g,
   //   'CNPJ deve conter 14 digitos'
   // ),
-  phoneNumber: yup
-    .string()
-    // .matches('^\\(\\d{2}\\)\\d{4,5}\\-\\d{4}$')
-    .required('Telefone é um campo obrigatório'),
+  phoneNumber: yup.string().required('Telefone é um campo obrigatório'),
+  // .matches('^\\(\\d{2}\\)\\d{4,5}\\-\\d{4}$')
   site: yup.string(),
 });
 
@@ -77,7 +75,7 @@ export const InfoBusiness = () => {
           id="cnpj"
           className={styles.textField}
           name="cnpj"
-          label="CNPJ"
+          label="CNPJ (Opcional)"
           variant="outlined"
           fullWidth
           value={formik.values.cnpj}
