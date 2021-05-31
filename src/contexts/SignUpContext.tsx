@@ -1,52 +1,43 @@
-import React from 'react';
+import React from 'react'
 
-interface Address {
-  zipCode: string;
-  street: string;
-  number: string;
-  complement: string;
-  city: string;
+type Address = {
+  zipCode: string
+  street: string
+  number: string
+  complement: string
+  state: string
+  city: string
+  ibge: string
 }
 
-interface SignUpData {
-  userName: string;
-  email: string;
-  password: string;
-  date: string;
-  businessName: string;
-  cnpj: string;
-  phoneNumber: string;
-  website: string;
-  img: string;
-  key_img: string;
-  address: Address;
-  opening: string;
-  closure: string;
+export type SalonData = {
+  businessName: string
+  cnpj: string
+  phoneNumber: string
+  website: string
+  img: string
+  key_img: string
+  address: Address
+  opening: string
+  closure: string
+  user_id?: number
 }
 
-interface SignUpContextData {
-  signUpData: SignUpData;
-  progress: number;
-  selectedFile: File;
-  loading: boolean;
-  setSelectedFile: React.Dispatch<React.SetStateAction<File>>;
-  setSignUpData: React.Dispatch<React.SetStateAction<SignUpData>>;
-  setProgress: React.Dispatch<React.SetStateAction<number>>;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  handleNext: () => void;
-  handleBack: () => void;
+type SignUpContextData = {
+  salonData: SalonData
+  progress: number
+  setSalonData: React.Dispatch<React.SetStateAction<SalonData>>
+  setProgress: React.Dispatch<React.SetStateAction<number>>
+  handleNext: () => void
+  handleBack: () => void
 }
 
 export const SignUpContext = React.createContext<SignUpContextData>(
   {} as SignUpContextData
-);
+)
 
 const SignUpProvider: React.FC = ({ children }) => {
-  const [signUpData, setSignUpData] = React.useState<SignUpData>({
-    userName: '',
-    email: '',
-    password: '',
-    date: '',
+  const [salonData, setSalonData] = React.useState<SalonData>({
     businessName: '',
     cnpj: '',
     phoneNumber: '',
@@ -61,40 +52,34 @@ const SignUpProvider: React.FC = ({ children }) => {
       number: '',
       complement: '',
       city: '',
+      state: '',
+      ibge: '',
     },
-  });
-  const [progress, setProgress] = React.useState(0);
-  const [loading, setLoading] = React.useState(false);
-  const [selectedFile, setSelectedFile] = React.useState<File>();
+  })
+  const [progress, setProgress] = React.useState(0)
 
   const handleNext = React.useCallback(() => {
-    setProgress(progress + 1);
-  }, [progress]);
+    setProgress(progress + 1)
+  }, [progress])
 
   const handleBack = React.useCallback(() => {
-    setProgress(progress - 1);
-  }, [progress]);
-
-  console.log({ signUpData });
+    setProgress(progress - 1)
+  }, [progress])
 
   return (
     <SignUpContext.Provider
       value={{
-        signUpData,
+        salonData,
         progress,
-        selectedFile,
-        loading,
-        setSignUpData,
+        setSalonData,
         setProgress,
         handleNext,
         handleBack,
-        setSelectedFile,
-        setLoading,
       }}
     >
       {children}
     </SignUpContext.Provider>
-  );
-};
+  )
+}
 
-export default SignUpProvider;
+export default SignUpProvider

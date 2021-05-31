@@ -1,41 +1,35 @@
-import styles from './styles.module.scss';
-import Router from 'next/router';
+import styles from './styles.module.scss'
+import Router from 'next/router'
 
-import { Button } from '@material-ui/core';
-import { useContext } from 'react';
-import { SignUpContext } from '../../contexts/SignUpContext';
+import { Button } from '@material-ui/core'
+import React from 'react'
+import { AdornedButton } from '../AdornedButton'
 
-export const Buttons = () => {
-  const { progress, loading, handleBack } = useContext(SignUpContext);
-
+export const LeftButton = (props) => {
   return (
-    <>
-      <Button
-        className={styles.btn}
-        size="large"
-        variant="outlined"
-        color="primary"
-        onClick={
-          progress === 0
-            ? () => {
-                Router.push('/login');
-              }
-            : () => handleBack()
-        }
-      >
-        Voltar
-      </Button>
+    <Button
+      className={styles.btn}
+      size="large"
+      variant="outlined"
+      color="primary"
+      {...props}
+    >
+      {props.children}
+    </Button>
+  )
+}
 
-      <Button
-        className={styles.btn}
-        size="large"
-        variant="contained"
-        color="primary"
-        type="submit"
-        disabled={loading}
-      >
-        {progress === 3 ? 'Finalizar' : 'Proximo'}
-      </Button>
-    </>
-  );
-};
+export const RightButton = (props) => {
+  return (
+    <AdornedButton
+      className={styles.btn}
+      size="large"
+      variant="contained"
+      color="primary"
+      type="submit"
+      {...props}
+    >
+      {props.children}
+    </AdornedButton>
+  )
+}

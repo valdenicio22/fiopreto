@@ -1,25 +1,25 @@
-import { TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core'
 
-import { useFormik } from 'formik';
-import { useContext } from 'react';
-import * as yup from 'yup';
-import { SignUpContext } from '../../contexts/SignUpContext';
-import { maskJs } from 'mask-js';
-
-import styles from './styles.module.scss';
-import { Buttons } from './Buttons';
+import { useFormik } from 'formik'
+import { useContext } from 'react'
+import * as yup from 'yup'
+import { SignUpContext } from '../../contexts/SignUpContext'
+import { maskJs } from 'mask-js'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import styles from './styles.module.scss'
+import { RightButton } from './Buttons'
 
 const handlePhoneMask = (value) => {
   // console.log(value);
   // if (value.length < 15) {
   //   return maskJs('(99) 9999-9999', value.replace(/[^0-9]/g, ''));
   // }
-  return maskJs('(99) 9 9999-9999', value.replace(/[^0-9]/g, ''));
-};
+  return maskJs('(99)99999-9999', value.replace(/[^0-9]/g, ''))
+}
 
 const handleCnpjMask = (value) => {
-  return maskJs('99.999.999/9999-99', value.replace(/[^0-9]/g, ''));
-};
+  return maskJs('99.999.999/9999-99', value.replace(/[^0-9]/g, ''))
+}
 
 const validationSchema = yup.object({
   businessName: yup
@@ -34,25 +34,24 @@ const validationSchema = yup.object({
   phoneNumber: yup.string().required('Telefone é um campo obrigatório'),
   // .matches('^\\(\\d{2}\\)\\d{4,5}\\-\\d{4}$')
   site: yup.string(),
-});
+})
 
 export const InfoBusiness = () => {
-  const { signUpData, setSignUpData, handleNext } = useContext(SignUpContext);
+  const { salonData, setSalonData, handleNext } = useContext(SignUpContext)
 
   const formik = useFormik({
     initialValues: {
-      businessName: signUpData.businessName,
-      cnpj: signUpData.cnpj,
-      phoneNumber: signUpData.phoneNumber,
-      website: signUpData.website,
+      businessName: salonData.businessName,
+      cnpj: salonData.cnpj,
+      phoneNumber: salonData.phoneNumber,
+      website: salonData.website,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setSignUpData({ ...signUpData, ...values });
-      handleNext();
-      // console.log(JSON.stringify(values));
+      setSalonData({ ...salonData, ...values })
+      handleNext()
     },
-  });
+  })
 
   return (
     <form className={styles.formContainer} onSubmit={formik.handleSubmit}>
@@ -115,8 +114,8 @@ export const InfoBusiness = () => {
         />
       </div>
       <footer className={styles.buttons}>
-        <Buttons />
+        <RightButton endIcon={<ArrowForwardIcon />}>Próximo</RightButton>
       </footer>
     </form>
-  );
-};
+  )
+}

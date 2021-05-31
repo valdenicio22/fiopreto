@@ -1,19 +1,19 @@
-import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { useFormik } from 'formik'
+import * as yup from 'yup'
 
-import { TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core'
 
-import styles from './styles.module.scss';
+import styles from './styles.module.scss'
 
-import { SignUpContext } from '../../contexts/SignUpContext';
-import { useContext } from 'react';
+import { SignUpContext } from '../../contexts/SignUpContext'
+import { useContext } from 'react'
 
-import { maskJs } from 'mask-js';
-import { Buttons } from './Buttons';
+import { maskJs } from 'mask-js'
+import { RightButton, LeftButton } from './Buttons'
 
 const handleCepMask = (value) => {
-  return maskJs('99.999-999', value.replace(/[^0-9]/g, ''));
-};
+  return maskJs('99.999-999', value.replace(/[^0-9]/g, ''))
+}
 
 const validationSchema = yup.object({
   zipCode: yup.string().required('CEP é um campo obrigatório'),
@@ -21,39 +21,44 @@ const validationSchema = yup.object({
   number: yup.string().required('Number é um campo obrigatório'),
   complement: yup.string().required('Complemento é um campo obrigatório'),
   city: yup.string().required('Cidade é um campo obrigatório'),
-});
+})
 
 export const AddressBusiness = () => {
-  const { signUpData, setSignUpData, handleNext } = useContext(SignUpContext);
+  const { salonData, setSalonData, handleNext, handleBack } =
+    useContext(SignUpContext)
 
   const formik = useFormik({
     initialValues: {
-      zipCode: signUpData.address.zipCode,
-      street: signUpData.address.street,
-      number: signUpData.address.number,
-      complement: signUpData.address.complement,
-      city: signUpData.address.city,
+      zipCode: salonData.address.zipCode,
+      street: salonData.address.street,
+      number: salonData.address.number,
+      complement: salonData.address.complement,
+      city: salonData.address.city,
+      state: salonData.address.state,
+      ibge: salonData.address.ibge,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setSignUpData({ ...signUpData, address: { ...values } });
-      handleNext();
+      setSalonData({ ...salonData, address: { ...values } })
+      handleNext()
     },
-  });
+  })
 
   function onBlurCep(e, setFieldValue) {
-    const { value } = e.target;
+    const { value } = e.target
 
-    const cep = value?.replace(/[^0-9]/g, '');
-    if (cep?.length !== 8) return;
+    const cep = value?.replace(/[^0-9]/g, '')
+    if (cep?.length !== 8) return
 
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
       .then((response) => response.json())
       .then((data) => {
-        setFieldValue('street', data.logradouro);
-        setFieldValue('complement', data.complemento);
-        setFieldValue('city', data.localidade);
-      });
+        setFieldValue('street', data.logradouro)
+        setFieldValue('complement', data.complemento)
+        setFieldValue('city', data.localidade)
+        setFieldValue('state', data.uf)
+        setFieldValue('ibge', data.ibge)
+      })
   }
   return (
     <form className={styles.formContainer} onSubmit={formik.handleSubmit}>
@@ -127,8 +132,10 @@ export const AddressBusiness = () => {
         />
       </div>
       <footer className={styles.buttons}>
-        <Buttons />
+        <LeftButton onClick={() => handleBack()}>Anterior</LeftButton>
+
+        <RightButton>Proximo</RightButton>
       </footer>
     </form>
-  );
-};
+  )
+}

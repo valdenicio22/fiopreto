@@ -1,13 +1,13 @@
-import React from 'react';
-import Link from 'next/link';
-// import { AuthContext } from '../contexts/AuthContext';
+import React from 'react'
+import Link from 'next/link'
 
-import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { useFormik } from 'formik'
+import * as yup from 'yup'
 
-import { TextField, Button } from '@material-ui/core';
-import styles from '../styles/login.module.scss';
-import { LogoIcon } from '../components/Icons';
+import { TextField, Button } from '@material-ui/core'
+import styles from '../styles/login.module.scss'
+import { LogoIcon } from '../components/Icons'
+import { AuthContext } from '../contexts/AuthContext'
 
 const validationSchema = yup.object({
   email: yup
@@ -15,10 +15,10 @@ const validationSchema = yup.object({
     .email('Entre com um e-mail válido ')
     .required('Email é um campo obrigatório'),
   password: yup.string().required('Senha é um campo obrigatório'),
-});
+})
 
 export default function Login() {
-  // const { signIn } = React.useContext(AuthContext);
+  const { signIn } = React.useContext(AuthContext)
 
   const formik = useFormik({
     initialValues: {
@@ -27,10 +27,9 @@ export default function Login() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      // async // await signIn(values);
-      console.log(values);
+      signIn(values)
     },
-  });
+  })
 
   return (
     <div className={styles.container}>
@@ -89,5 +88,5 @@ export default function Login() {
         </Link>
       </footer>
     </div>
-  );
+  )
 }

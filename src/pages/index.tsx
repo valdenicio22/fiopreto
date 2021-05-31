@@ -1,8 +1,8 @@
-import { Button } from '@material-ui/core';
-import Router from 'next/router';
-import Link from 'next/link';
+import { Button } from '@material-ui/core'
+import Router from 'next/router'
+import Link from 'next/link'
 
-import styles from '../styles/home.module.scss';
+import styles from '../styles/home.module.scss'
 
 import {
   FullLogoIcon,
@@ -11,9 +11,16 @@ import {
   FeedIcon,
   CharacterReadingIcon,
   IllustrationsLaying,
-} from '../components/Icons';
+} from '../components/Icons'
+import { AuthContext } from '../contexts/AuthContext'
+import React from 'react'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
+import { withSSRGuest } from '../utils/withSSRGuest'
 
 export default function Home() {
+  const { user } = React.useContext(AuthContext)
+
   return (
     <div className={styles.container}>
       <div className={`${styles.characterLoving} ${styles.flex}`}>
@@ -105,5 +112,13 @@ export default function Home() {
         </p>
       </div>
     </div>
-  );
+  )
 }
+
+export const getServerSideProps: GetServerSideProps = withSSRGuest(
+  async (ctx) => {
+    return {
+      props: {},
+    }
+  }
+)

@@ -5,26 +5,7 @@ import { TextField } from '@material-ui/core'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
-import styles from './styles.module.scss'
-import { SignUpContext } from '../../contexts/SignUpContext'
-import { api } from '../../services/api'
-
-import Router from 'next/router'
-import { LeftButton, RightButton } from './Buttons'
-
-// const mockedApi = {
-//   post: (route: string, data: any) => {
-//     return new Promise((resolve, reject) => {
-//       setTimeout(() => {
-//         resolve({
-//           data: {
-//             id: 15,
-//           },
-//         })
-//       }, 1000)
-//     })
-//   },
-// }
+import styles from '../SignupSteps/styles.module.scss'
 
 const validationSchema = yup.object({
   name: yup
@@ -52,41 +33,17 @@ type UserData = {
   dob: string
 }
 
-export const Owner = () => {
-  const [loading, setLoading] = React.useState(false)
+type UserFormProps = {
+  onSubmit: (values: UserData) => void
+  initialValues: UserData
+  children: React.ReactNode
+}
 
-  const { handleNext, setSalonData } = React.useContext(SignUpContext)
-
-  function saveUserData(userData: UserData) {
-    setLoading(true)
-    api
-      .post('auth/register', userData)
-      .then((response) => {
-        setLoading(false)
-        setSalonData((prevSalonData) => ({
-          ...prevSalonData,
-          user_id: response.data.id,
-        }))
-        handleNext()
-      })
-      .catch((err) => {
-        setLoading(false)
-        console.log(err)
-      })
-  }
-
+export const UserForm = (props: UserFormProps) => {
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-      dob: '',
-    },
+    initialValues: props.initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      saveUserData(values)
-      //handleNext();
-    },
+    onSubmit: props.onSubmit,
   })
 
   return (
@@ -147,11 +104,7 @@ export const Owner = () => {
         <span>*Mínimo de 8 caracteres</span>
       </div>
 
-      <footer className={styles.buttons}>
-        <LeftButton onClick={() => Router.push('/login')}>Sign In</LeftButton>
-
-        <RightButton loading={loading}>Salvar</RightButton>
-      </footer>
+      <footer className={styles.buttons}>{props.children}</footer>
     </form>
   )
 }

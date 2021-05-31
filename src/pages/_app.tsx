@@ -1,25 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ThemeProvider } from '@material-ui/core/styles';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { ThemeProvider } from '@material-ui/core/styles'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
 
-import theme from '../theme';
+import theme from '../theme'
 
-import Head from 'next/head';
+import Head from 'next/head'
 
-import '../styles/global.scss';
+import '../styles/global.scss'
 // import { AuthProvider } from '../contexts/AuthContext';
-import SignUpProvider from '../contexts/SignUpContext';
+import SignUpProvider from '../contexts/SignUpContext'
+import { AuthProvider } from '../contexts/AuthContext'
 
 export default function MyApp(props) {
-  const { Component, pageProps } = props;
+  const { Component, pageProps } = props
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
+    const jssStyles = document.querySelector('#jss-server-side')
     if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
+      jssStyles.parentElement.removeChild(jssStyles)
     }
-  }, []);
+  }, [])
 
   return (
     <>
@@ -29,18 +32,20 @@ export default function MyApp(props) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/pwaImg.png" /> */}
       </Head>
-      {/* <AuthProvider> */}
-      <SignUpProvider>
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </SignUpProvider>
-      {/* </AuthProvider> */}
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <AuthProvider>
+          <SignUpProvider>
+            <ThemeProvider theme={theme}>
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </SignUpProvider>
+        </AuthProvider>
+      </MuiPickersUtilsProvider>
     </>
-  );
+  )
 }
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
-};
+}

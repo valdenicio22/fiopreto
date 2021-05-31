@@ -1,60 +1,58 @@
-import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import styles from './styles.module.scss';
+import React, { Dispatch, SetStateAction, useCallback, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
+import styles from './styles.module.scss'
 
-import ImageSearchIcon from '@material-ui/icons/ImageSearch';
-import { api } from '../../services/api';
-import { SignUpContext } from '../../contexts/SignUpContext';
+import ImageSearchIcon from '@material-ui/icons/ImageSearch'
+import { api } from '../../services/api'
+import { SignUpContext } from '../../contexts/SignUpContext'
 
 interface Props {
-  onFileUploaded: (file: File) => void;
-  onFileUploaded2: Dispatch<SetStateAction<{ img: string; key_img: string }>>;
+  onFileUploaded: Dispatch<SetStateAction<{ img: string; key_img: string }>>
+  setIsImgUploaded: Dispatch<SetStateAction<boolean>>
 }
 
-interface imgResponseData {
-  url: string;
-  key: string;
+interface ImgResponseData {
+  url: string
+  key: string
 }
 
-const Dropzone: React.FC<Props> = ({ onFileUploaded, onFileUploaded2 }) => {
-  const { setLoading } = React.useContext(SignUpContext);
-
-  const [selectedFileUrl, setSelectedFileUrl] = useState('');
+const Dropzone: React.FC<Props> = ({ onFileUploaded, setIsImgUploaded }) => {
+  const [selectedFileUrl, setSelectedFileUrl] = useState('')
 
   const onDrop = useCallback(
     (acceptedFiles) => {
-      const file = acceptedFiles[0];
+      const [file] = acceptedFiles
 
-      const data = new FormData();
+      const data = new FormData()
+
+      const fileUrl = URL.createObjectURL(file)
+      setSelectedFileUrl(fileUrl)
+
       if (file) {
-        data.append('file', file, file.name);
+        data.append('file', file, file.name)
       }
-      setLoading(true);
       api
-        .post<imgResponseData>('/image', data)
+        .post<ImgResponseData>('/image', data)
         .then((response) => {
-          console.log(`A imagem ${file.name} já foi enviada para o servidor!`);
-          onFileUploaded2({
+          console.log(`A imagem ${file.name} já foi enviada para o servidor!`)
+          onFileUploaded({
             img: response.data.url,
             key_img: response.data.key,
-          });
-          setLoading(false);
+          })
+          setIsImgUploaded(true)
         })
         .catch((err) => {
-          setLoading(false);
-          console.log(err);
-        });
-
-      const fileUrl = URL.createObjectURL(file);
-      setSelectedFileUrl(fileUrl);
+          setIsImgUploaded(false)
+          console.error(err)
+        })
     },
     [onFileUploaded]
-  );
-  console.log(selectedFileUrl);
+  )
+
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: 'image/*',
-  });
+  })
 
   return (
     <div className={styles.dropzone} {...getRootProps()} onChange={() => {}}>
@@ -70,7 +68,7 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded, onFileUploaded2 }) => {
         </p>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Dropzone;
+export default Dropzone
