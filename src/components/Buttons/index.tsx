@@ -1,5 +1,4 @@
 import styles from './styles.module.scss'
-import Router from 'next/router'
 
 import { Button } from '@material-ui/core'
 import React from 'react'

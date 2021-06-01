@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import React from 'react'
-import TemporaryDrawer from '../components/Drawer'
+// import MyDrawer from '../components/MyDrawer'
 import { FullLogoIcon } from '../components/Icons'
 import { AuthContext } from '../contexts/AuthContext'
 import styles from '../styles/perfil.module.scss'
@@ -33,7 +33,7 @@ export default function Perfil() {
       </div>
       <div className={styles.perfilDrawer}>
         <h2>{user?.name}</h2>
-        <TemporaryDrawer />
+        {/* <MyDrawer /> */}
       </div>
       <div className={styles.perfilInformations}>
         <Button

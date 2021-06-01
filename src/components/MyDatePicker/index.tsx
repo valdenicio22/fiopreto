@@ -1,57 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { DatePicker } from '@material-ui/pickers'
-import { api } from '../services/api'
-import styles from '../styles/schedule.module.scss'
-import { FullLogoIcon } from '../components/Icons'
-import { DailySchedule } from '../components/DailySchedule'
+// import React, { useEffect, useState } from 'react'
+// import { DatePicker } from '@material-ui/pickers'
+// import { api } from '../services/api'
+// import styles from '../styles/schedule.module.scss'
+// import { FullLogoIcon } from '../components/Icons'
 // import MyDrawer from '../components/MyDrawer'
 
-type Schedule = {
-  date: string
-  id: number
-  time: string
-  user: { name: string }
-}
-
-const StaticDatePicker = () => {
-  const [date, changeDate] = useState(new Date())
-  const [schedules, setSchedules] = useState<Schedule[] | undefined>()
-
-  useEffect(() => {
-    const day = date.getDate().toString().padStart(2, '0')
-    const month = Number(date.getMonth().toString().padStart(2, '0')) + 1
-    const year = date.getFullYear()
-    const query = `${day}_${month}_${year}`
-
-    api
-      .get(`scheduling/${query}`)
-      .then(({ data }) => {
-        console.log({ data })
-        setSchedules(data.rows)
-      })
-      .catch((err) => {
-        console.log({ err })
-      })
-  }, [date])
-
-  return (
-    <div className={styles.containerSchedule}>
-      <FullLogoIcon />
-      <div className={styles.agendaDrawer}>
-        <h2>Minha Agenda</h2>
-        <p>Drawer</p>
-        {/* <MyDrawer /> */}
-      </div>
-      <DatePicker
-        disableToolbar
-        variant="static"
-        value={date}
-        onChange={changeDate}
-      />
-      <DailySchedule schedules={schedules} opening="10:00" closing="17:50" />
-    </div>
-  )
-}
+// type Schedule = {
+//   date: string
+//   id: number
+//   time: string
+//   user: { name: string }
+// }
 
 // type DailyScheduleProps = {
 //   opening: string
@@ -127,7 +86,12 @@ const StaticDatePicker = () => {
 //   const todayDate = new Date()
 //   const today = todayDate.toLocaleDateString('pt-BR')
 //   return (
-//     <div>
+//     <div className={styles.containerSchedule}>
+//       <FullLogoIcon />
+//       <div className={styles.agendaSchedule}>
+//         <h2>Minha Agenda</h2>
+//         <MyDrawer />
+//       </div>
 //       <h3>{today}</h3>
 //       <ul>
 //         {completedDailySchedule.map((schedule) => (
@@ -140,5 +104,3 @@ const StaticDatePicker = () => {
 //     </div>
 //   )
 // }
-
-export default StaticDatePicker

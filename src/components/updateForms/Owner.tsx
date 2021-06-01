@@ -1,6 +1,13 @@
 import React from 'react'
 
-import { TextField } from '@material-ui/core'
+import {
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+} from '@material-ui/core'
 
 import { useFormik } from 'formik'
 import * as yup from 'yup'
@@ -11,6 +18,9 @@ import { api } from '../../services/api'
 
 import Router from 'next/router'
 import { LeftButton, RightButton } from '../Buttons'
+
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 // const mockedApi = {
 //   post: (route: string, data: any) => {
@@ -56,6 +66,7 @@ type UserData = {
 
 export const Owner = () => {
   const [loading, setLoading] = React.useState(false)
+  const [showPassword, setShowPassword] = React.useState(false)
 
   const { handleNext, setSalonData } = React.useContext(SignUpContext)
 
@@ -125,7 +136,6 @@ export const Owner = () => {
           label="Data de Nascimento*"
           variant="outlined"
           type="date"
-          // defaultValue="2017-05-24"
           InputLabelProps={{
             shrink: true,
           }}
@@ -134,7 +144,36 @@ export const Owner = () => {
           error={formik.touched.dob && Boolean(formik.errors.dob)}
           helperText={formik.touched.dob && formik.errors.dob}
         />
-        <TextField
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="password"
+            className={styles.textField}
+            name="password"
+            label="Senha*"
+            type={showPassword ? 'text' : 'password'}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            // helperText={formik.touched.password && formik.errors.password}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+            labelWidth={70}
+          />
+        </FormControl>
+        {/* <TextField
           id="password"
           className={styles.textField}
           name="password"
@@ -146,7 +185,7 @@ export const Owner = () => {
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
-        />
+        /> */}
         <span>*Mínimo de 8 caracteres</span>
       </div>
 

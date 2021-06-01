@@ -15,10 +15,10 @@ export default function SignUp() {
   const { progress } = useContext(SignUpContext)
 
   const stepsName = [
-    'Owner information',
-    'Business Information',
-    'Business Address',
-    'Business Details',
+    'Cadastre um usuário',
+    'Informações do salão',
+    'Endereço do salão',
+    'Detalhes do salão',
   ]
 
   const stepsForms = [
