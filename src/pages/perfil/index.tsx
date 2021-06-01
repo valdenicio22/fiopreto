@@ -2,29 +2,17 @@ import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import React from 'react'
 // import MyDrawer from '../components/MyDrawer'
-import { FullLogoIcon } from '../components/Icons'
-import { AuthContext } from '../contexts/AuthContext'
-import styles from '../styles/perfil.module.scss'
-import { api } from '../services/api'
+import { FullLogoIcon } from '../../components/Icons'
 
-import { withSSRAuth } from '../utils/withSSRAuth'
+import styles from '../../styles/perfil.module.scss'
+import { api } from '../../services/api'
+import Link from 'next/link'
+import { withSSRAuth } from '../../utils/withSSRAuth'
 import { GetServerSideProps } from 'next'
+import { UserLoggedContext } from '../../contexts/UserLoggedContext'
 
 export default function Perfil() {
-  const { user } = React.useContext(AuthContext)
-
-  React.useEffect(() => {
-    if (!user) {
-      return
-    }
-
-    api
-      .get(`/user/${user.id}`)
-      .then((response) => {
-        console.log({ response })
-      })
-      .catch((err) => console.log(err))
-  }, [user])
+  const { userData } = React.useContext(UserLoggedContext)
 
   return (
     <div className={styles.perfilContainer}>
@@ -32,18 +20,20 @@ export default function Perfil() {
         <FullLogoIcon />
       </div>
       <div className={styles.perfilDrawer}>
-        <h2>{user?.name}</h2>
+        <h2>{userData?.name}</h2>
         {/* <MyDrawer /> */}
       </div>
       <div className={styles.perfilInformations}>
-        <Button
-          className={styles.perfilBtn}
-          variant="outlined"
-          color="primary"
-          endIcon={<ArrowForwardIcon />}
-        >
-          Dados pessoais
-        </Button>
+        <Link href="perfil/owner_update">
+          <Button
+            className={styles.perfilBtn}
+            variant="outlined"
+            color="primary"
+            endIcon={<ArrowForwardIcon />}
+          >
+            Dados pessoais
+          </Button>
+        </Link>
         <Button
           className={styles.perfilBtn}
           variant="outlined"

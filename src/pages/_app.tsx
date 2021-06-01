@@ -12,6 +12,7 @@ import '../styles/global.scss'
 // import { AuthProvider } from '../contexts/AuthContext';
 import SignUpProvider from '../contexts/SignUpContext'
 import { AuthProvider } from '../contexts/AuthContext'
+import UserLoggedContextProvider from '../contexts/UserLoggedContext'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
@@ -34,11 +35,13 @@ export default function MyApp(props) {
       </Head>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <AuthProvider>
-          <SignUpProvider>
-            <ThemeProvider theme={theme}>
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </SignUpProvider>
+          <UserLoggedContextProvider>
+            <SignUpProvider>
+              <ThemeProvider theme={theme}>
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </SignUpProvider>
+          </UserLoggedContextProvider>
         </AuthProvider>
       </MuiPickersUtilsProvider>
     </>

@@ -13,28 +13,9 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 
 import styles from './styles.module.scss'
-import { SignUpContext } from '../../contexts/SignUpContext'
-import { api } from '../../services/api'
 
-import Router from 'next/router'
-import { LeftButton, RightButton } from '../Buttons'
-
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-
-// const mockedApi = {
-//   post: (route: string, data: any) => {
-//     return new Promise((resolve, reject) => {
-//       setTimeout(() => {
-//         resolve({
-//           data: {
-//             id: 15,
-//           },
-//         })
-//       }, 1000)
-//     })
-//   },
-// }
+import { RightButton } from '../Buttons'
+import { UserData } from '../../contexts/UserLoggedContext'
 
 const validationSchema = yup.object({
   name: yup
@@ -45,60 +26,31 @@ const validationSchema = yup.object({
     .string()
     .email('Email Inválido')
     .required('Email é um campo obrigatório'),
-  password: yup
-    .string()
-    .matches(
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
-      '*Senhas devem conter 8 caracteres e no mínimo 1 letra maíuscula, número e caracter especial (Ex: *, &, $,)'
-    )
-    .required('Senha é um campo obrigatório'),
   dob: yup
     .string()
     .required('Data de Nascimento é um campo obrigatório (MM/DD/YYYY)'),
 })
 
-type UserData = {
-  name: string
-  email: string
-  password: string
-  dob: string
+type OwnerProps = {
+  initialValues: {
+    name: string
+    email: string
+    dob: string
+  }
+  updateUser: (newUserData: UserData) => void
+  userUpdateLoading: boolean
 }
 
-export const Owner = () => {
-  const [loading, setLoading] = React.useState(false)
-  const [showPassword, setShowPassword] = React.useState(false)
-
-  const { handleNext, setSalonData } = React.useContext(SignUpContext)
-
-  function saveUserData(userData: UserData) {
-    setLoading(true)
-    api
-      .post('auth/register', userData)
-      .then((response) => {
-        setLoading(false)
-        setSalonData((prevSalonData) => ({
-          ...prevSalonData,
-          user_id: response.data.id,
-        }))
-        handleNext()
-      })
-      .catch((err) => {
-        setLoading(false)
-        console.log(err)
-      })
-  }
-
+export const Owner = ({
+  initialValues,
+  updateUser,
+  userUpdateLoading,
+}: OwnerProps) => {
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-      dob: '',
-    },
+    initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      saveUserData(values)
-      //handleNext();
+      updateUser(values)
     },
   })
 
@@ -144,7 +96,7 @@ export const Owner = () => {
           error={formik.touched.dob && Boolean(formik.errors.dob)}
           helperText={formik.touched.dob && formik.errors.dob}
         />
-        <FormControl variant="outlined">
+        {/* <FormControl variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
             Password
           </InputLabel>
@@ -172,7 +124,7 @@ export const Owner = () => {
             }
             labelWidth={70}
           />
-        </FormControl>
+        </FormControl> */}
         {/* <TextField
           id="password"
           className={styles.textField}
@@ -186,13 +138,11 @@ export const Owner = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         /> */}
-        <span>*Mínimo de 8 caracteres</span>
+        {/* <span>*Mínimo de 8 caracteres</span> */}
       </div>
 
       <footer className={styles.buttons}>
-        <LeftButton onClick={() => Router.push('/login')}>Sign In</LeftButton>
-
-        <RightButton loading={loading}>Salvar</RightButton>
+        <RightButton loading={userUpdateLoading}>Salvar</RightButton>
       </footer>
     </form>
   )
