@@ -11,6 +11,7 @@ type DailyScheduleProps = {
   opening: string
   closing: string
   schedules?: Schedule[]
+  date: Date
 }
 
 type CompleteDailySchedule = {
@@ -75,19 +76,33 @@ export function DailySchedule({
   opening,
   closing,
   schedules,
+  date,
 }: DailyScheduleProps) {
   const completedDailySchedule = generateCompleteDailySchedule(
     opening,
     closing,
     schedules
   )
+  const days = [
+    'Segunda',
+    'Terça-feira',
+    'Quarta-feira',
+    'Quinta-feira',
+    'Sexta-feira',
+    'Sábado',
+    'Domingo',
+  ]
+  const data = date.getDay()
+  console.log(data)
 
   return (
     <div className={styles.containerDaily}>
-      <table className={styles.tableDailySchedule}>
+      <table>
         <thead>
           <tr>
-            <th colSpan={2}>Sexta</th>
+            <th colSpan={2}>
+              {days.map((day, idx) => (idx === data - 1 ? days[idx] : ''))}
+            </th>
           </tr>
           <tr>
             <th>Horarios</th>
