@@ -1,20 +1,22 @@
-.container {
+.containerUpdate {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  width: 360px;
-
   padding: 4.2rem 1.5rem 2.5rem;
 
-  .updateForm {
-    width: 100%;
+  .contentUpdate {
+    width: 360px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    .updateForm {
+      width: 100%;
 
-    margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 2.5rem;
+    }
   }
 }

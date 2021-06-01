@@ -40,14 +40,16 @@ export default function FormEdit() {
   const form = currentFormName && forms[currentFormName]
 
   return (
-    <div className={styles.container}>
-      <div className={styles.updateForm}>
-        <Link href="/perfil">
-          <ArrowBack />
-        </Link>
-        <h2>Dado de Formulario</h2>
+    <div className={styles.containerUpdate}>
+      <div className={styles.contentUpdate}>
+        <div className={styles.updateForm}>
+          <Link href="/perfil">
+            <ArrowBack />
+          </Link>
+          <h2>Dado de Formulario</h2>
+        </div>
+        {form && form}
       </div>
-      {form && form}
     </div>
   )
 }

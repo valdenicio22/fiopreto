@@ -4,7 +4,6 @@ import { api } from '../services/api'
 import styles from '../styles/schedule.module.scss'
 import { FullLogoIcon } from '../components/Icons'
 import { DailySchedule } from '../components/DailySchedule'
-import zhCN from 'date-fns/esm/locale/zh-CN/index.js'
 // import MyDrawer from '../components/MyDrawer'
 
 type Schedule = {
