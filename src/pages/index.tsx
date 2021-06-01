@@ -1,5 +1,4 @@
 import { Button } from '@material-ui/core'
-import Router from 'next/router'
 import Link from 'next/link'
 
 import styles from '../styles/home.module.scss'
@@ -35,16 +34,17 @@ export default function Home() {
             bem cuidado
           </h1>
 
-          <Button
-            className={styles.btn}
-            size="large"
-            variant="contained"
-            color="primary"
-            type="submit"
-            onClick={() => Router.push('/login')}
-          >
-            Fazer login
-          </Button>
+          <Link href="/login">
+            <Button
+              className={styles.btn}
+              size="large"
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Fazer login
+            </Button>
+          </Link>
 
           <p>
             Quero{' '}

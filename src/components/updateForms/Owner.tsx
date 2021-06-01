@@ -77,6 +77,7 @@ export const Owner = ({
         />
         <TextField
           id="dob" // day of birthday
+          name="dob"
           className={styles.textField}
           label="Data de Nascimento*"
           variant="outlined"
@@ -135,7 +136,10 @@ export const Owner = ({
       </div>
 
       <footer className={styles.buttons}>
-        <RightButton loading={userUpdateLoading}>Salvar</RightButton>
+        {/* <LeftButton onClick={() => Router.push('/perfil')}>Voltar</LeftButton> */}
+        <RightButton loading={userUpdateLoading}>
+          Confirmar Alterações
+        </RightButton>
       </footer>
     </form>
   )

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Stepper, Step, StepLabel } from '@material-ui/core'
-import { Owner } from '../components/SignUpSteps/Owner'
-import { InfoBusiness } from '../components/SignUpSteps/InfoBusiness'
-import { AddressBusiness } from '../components/SignUpSteps/AddressBusiness'
-import { DetailsBusiness } from '../components/SignUpSteps/DetailsBusiness'
+import { Owner } from '../components/SignupSteps/Owner'
+import { InfoBusiness } from '../components/SignupSteps/InfoBusiness'
+import { AddressBusiness } from '../components/SignupSteps/AddressBusiness'
+import { DetailsBusiness } from '../components/SignupSteps/DetailsBusiness'
 import { SignUpContext } from '../contexts/SignUpContext'
 
 import styles from '../styles/SignUp.module.scss'

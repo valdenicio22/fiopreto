@@ -4,8 +4,10 @@
   align-items: center;
   justify-content: space-between;
 
-  width: min(100%, 310px);
-  height: 400px;
+  width: min(100%, 330px);
+  height: 500px;
+
+  margin-top: 1rem;
 
   .inputFields {
     width: 100%;
@@ -24,7 +26,7 @@
       }
     }
     .textField + .textField {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
     }
     span {
       font-size: 0.7rem;
@@ -37,5 +39,9 @@
     width: 100%;
     display: flex;
     gap: 1rem;
+
+    .btnUpdate {
+      width: 100%;
+    }
   }
 }

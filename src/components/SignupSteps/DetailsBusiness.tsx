@@ -59,7 +59,7 @@ function convertToSalonDataPost(salonData: SalonData): SalonDataPost {
     address: {
       zip: Number(unmask(address.zipCode)),
       street: address.street,
-      street1: '',
+      street1: address.complement,
       number: Number(address.number),
       district: address.city,
       city: address.city,

@@ -1,13 +1,11 @@
 import React from 'react'
-import Router from 'next/router'
 import { TextField } from '@material-ui/core'
 
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { maskJs } from 'mask-js'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import styles from './styles.module.scss'
-import { LeftButton, RightButton } from '../Buttons'
+import { RightButton } from '../Buttons'
 
 import { UserLoggedContext } from '../../contexts/UserLoggedContext'
 
@@ -20,7 +18,7 @@ const handleCnpjMask = (value) => {
 }
 
 const validationSchema = yup.object({
-  businessName: yup
+  name: yup
     .string()
     .min(3, 'Nome da empresa deve conter no mínimo 3 letras!')
     .required('Nome da empresa é um campo obrigatório'),
@@ -29,24 +27,24 @@ const validationSchema = yup.object({
   //   /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/g,
   //   'CNPJ deve conter 14 digitos'
   // ),
-  phoneNumber: yup.string().required('Telefone é um campo obrigatório'),
+  phone: yup.string().required('Telefone é um campo obrigatório'),
   // .matches('^\\(\\d{2}\\)\\d{4,5}\\-\\d{4}$')
   site: yup.string(),
 })
 
 export const InfoBusiness = () => {
-  const { salonData, setSalonData } = React.useContext(UserLoggedContext)
+  const { salonData, updateSalonData } = React.useContext(UserLoggedContext)
 
   const formik = useFormik({
     initialValues: {
-      businessName: salonData.name,
-      cnpj: salonData.cnpj,
-      phoneNumber: salonData.phone,
-      website: salonData.site,
+      name: salonData?.name,
+      cnpj: salonData?.cnpj,
+      phone: salonData?.phone,
+      site: salonData?.site,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setSalonData({ ...salonData, ...values })
+      updateSalonData({ ...salonData, ...values })
     },
   })
 
@@ -56,18 +54,16 @@ export const InfoBusiness = () => {
     <form className={styles.formContainer} onSubmit={formik.handleSubmit}>
       <div className={styles.inputFields}>
         <TextField
-          id="businessName"
+          id="name"
           className={styles.textField}
-          name="businessName"
+          name="name"
           label="Nome da Empresa*"
           variant="outlined"
           fullWidth
-          value={formik.values.businessName}
+          value={formik.values.name}
           onChange={formik.handleChange}
-          error={
-            formik.touched.businessName && Boolean(formik.errors.businessName)
-          }
-          helperText={formik.touched.businessName && formik.errors.businessName}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
         />
         <TextField
           id="cnpj"
@@ -84,37 +80,36 @@ export const InfoBusiness = () => {
           helperText={formik.touched.cnpj && formik.errors.cnpj}
         />
         <TextField
-          id="phoneNumber"
+          id="phone"
           className={styles.textField}
-          name="phoneNumber"
+          name="phone"
           label="Telefone*"
           variant="outlined"
           fullWidth
-          value={formik.values.phoneNumber}
+          value={formik.values.phone}
           onChange={(e) =>
-            formik.handleChange('phoneNumber')(handlePhoneMask(e.target.value))
+            formik.handleChange('phone')(handlePhoneMask(e.target.value))
           }
-          error={
-            formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
-          }
-          helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+          error={formik.touched.phone && Boolean(formik.errors.phone)}
+          helperText={formik.touched.phone && formik.errors.phone}
         />
         <TextField
-          id="website"
+          id="site"
           className={styles.textField}
-          name="website"
-          label="WebSite (Opcional)"
+          name="site"
+          label="site (Opcional)"
           variant="outlined"
           fullWidth
-          value={formik.values.website}
+          value={formik.values.site}
           onChange={formik.handleChange}
-          error={formik.touched.website && Boolean(formik.errors.website)}
-          helperText={formik.touched.website && formik.errors.website}
+          error={formik.touched.site && Boolean(formik.errors.site)}
+          helperText={formik.touched.site && formik.errors.site}
         />
       </div>
       <footer className={styles.buttons}>
-        <LeftButton onClick={() => Router.push('/perfil')}>Voltar</LeftButton>
-        <RightButton>Atualizar</RightButton>
+        <RightButton className={styles.btnUpdate}>
+          Confirmar Alterações
+        </RightButton>
       </footer>
     </form>
   )

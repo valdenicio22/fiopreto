@@ -38,7 +38,7 @@ const validationSchema = yup.object({
   password: yup
     .string()
     .matches(
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,20}$/,
       '*Senhas devem conter 8 caracteres e no mínimo 1 letra maíuscula, número e caracter especial (Ex: *, &, $,)'
     )
     .required('Senha é um campo obrigatório'),
@@ -62,7 +62,10 @@ export const Owner = () => {
   function saveUserData(userData: UserData) {
     setLoading(true)
     api
-      .post('auth/register', userData)
+      .post('auth/register', {
+        ...userData,
+        isHairdresser: true,
+      })
       .then((response) => {
         setLoading(false)
         setSalonData((prevSalonData) => ({

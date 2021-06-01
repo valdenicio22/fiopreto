@@ -26,7 +26,6 @@ const StaticDatePicker = () => {
     api
       .get(`scheduling/${query}`)
       .then(({ data }) => {
-        console.log({ data })
         setSchedules(data.rows)
       })
       .catch((err) => {

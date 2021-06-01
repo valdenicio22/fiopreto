@@ -1,3 +1,4 @@
+import React from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
@@ -5,18 +6,16 @@ import { TextField } from '@material-ui/core'
 
 import styles from './styles.module.scss'
 
-import { SignUpContext } from '../../contexts/SignUpContext'
-import { useContext } from 'react'
-
 import { maskJs } from 'mask-js'
 import { RightButton, LeftButton } from '../Buttons'
+import { UserLoggedContext } from '../../contexts/UserLoggedContext'
 
 const handleCepMask = (value) => {
   return maskJs('99.999-999', value.replace(/[^0-9]/g, ''))
 }
 
 const validationSchema = yup.object({
-  zipCode: yup.string().required('CEP é um campo obrigatório'),
+  zip: yup.string().required('CEP é um campo obrigatório'),
   street: yup.string().required('Rua é um campo obrigatório'),
   number: yup.string().required('Number é um campo obrigatório'),
   complement: yup.string().required('Complemento é um campo obrigatório'),
@@ -24,23 +23,22 @@ const validationSchema = yup.object({
 })
 
 export const AddressBusiness = () => {
-  const { salonData, setSalonData, handleNext, handleBack } =
-    useContext(SignUpContext)
+  const { salonData, updateSalonData } = React.useContext(UserLoggedContext)
+  const [loading, setLoading] = React.useState(false)
 
   const formik = useFormik({
     initialValues: {
-      zipCode: salonData.address.zipCode,
+      zip: salonData.address.zip,
       street: salonData.address.street,
       number: salonData.address.number,
-      complement: salonData.address.complement,
+      complement: salonData.address?.complement,
       city: salonData.address.city,
       state: salonData.address.state,
       ibge: salonData.address.ibge,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setSalonData({ ...salonData, address: { ...values } })
-      handleNext()
+      updateSalonData({ ...salonData, address: { ...values } })
     },
   })
 
@@ -49,34 +47,38 @@ export const AddressBusiness = () => {
 
     const cep = value?.replace(/[^0-9]/g, '')
     if (cep?.length !== 8) return
-
+    setLoading(true)
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
       .then((response) => response.json())
       .then((data) => {
+        setFieldValue('ibge', data.ibge)
+        setFieldValue('state', data.uf)
         setFieldValue('street', data.logradouro)
         setFieldValue('complement', data.complemento)
         setFieldValue('city', data.localidade)
-        setFieldValue('state', data.uf)
-        setFieldValue('ibge', data.ibge)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err) // criar error
       })
   }
   return (
     <form className={styles.formContainer} onSubmit={formik.handleSubmit}>
       <div className={styles.inputFields}>
         <TextField
-          id="zipCode"
+          id="zip"
           className={styles.textField}
-          name="zipCode"
+          name="zip"
           label="CEP*"
           variant="outlined"
           fullWidth
           onBlur={(e) => onBlurCep(e, formik.setFieldValue)}
-          value={formik.values.zipCode}
+          value={formik.values.zip}
           onChange={(e) =>
-            formik.handleChange('zipCode')(handleCepMask(e.target.value))
+            formik.handleChange('zip')(handleCepMask(e.target.value))
           }
-          error={formik.touched.zipCode && Boolean(formik.errors.zipCode)}
-          helperText={formik.touched.zipCode && formik.errors.zipCode}
+          error={formik.touched.zip && Boolean(formik.errors.zip)}
+          helperText={formik.touched.zip && formik.errors.zip}
         />
         <TextField
           id="street"
@@ -132,9 +134,7 @@ export const AddressBusiness = () => {
         />
       </div>
       <footer className={styles.buttons}>
-        <LeftButton onClick={() => handleBack()}>Anterior</LeftButton>
-
-        <RightButton>Proximo</RightButton>
+        <RightButton disabled={loading}>Confirmar alterações</RightButton>
       </footer>
     </form>
   )

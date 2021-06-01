@@ -11,6 +11,9 @@ import { withSSRAuth } from '../../utils/withSSRAuth'
 import { GetServerSideProps } from 'next'
 import { UserLoggedContext } from '../../contexts/UserLoggedContext'
 
+import { signOut } from '../../contexts/AuthContext'
+import Router from 'next/router'
+
 export default function Perfil() {
   const { userData } = React.useContext(UserLoggedContext)
 
@@ -44,15 +47,29 @@ export default function Perfil() {
             Dados da empresa
           </Button>
         </Link>
-        <Button
-          className={styles.perfilBtn}
-          variant="outlined"
-          color="primary"
-          endIcon={<ArrowForwardIcon />}
-        >
-          Foto e horários
-        </Button>
+        <Link href="perfil/addressBusiness_update">
+          <Button
+            className={styles.perfilBtn}
+            variant="outlined"
+            color="primary"
+            endIcon={<ArrowForwardIcon />}
+          >
+            Endereço da empresa
+          </Button>
+        </Link>
+        <Link href="perfil/detailsBusiness_update">
+          <Button
+            className={styles.perfilBtn}
+            variant="outlined"
+            color="primary"
+            endIcon={<ArrowForwardIcon />}
+          >
+            Foto e horários
+          </Button>
+        </Link>
       </div>
+      <button onClick={() => signOut()}>Logout</button>
+      <button onClick={() => Router.push('./schedule')}>Agenda</button>
     </div>
   )
 }
