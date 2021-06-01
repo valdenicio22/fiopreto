@@ -19,57 +19,59 @@ export default function Perfil() {
 
   return (
     <div className={styles.perfilContainer}>
-      <div className={styles.perfilHeader}>
-        <FullLogoIcon />
+      <div className={styles.perfilContent}>
+        <div className={styles.perfilHeader}>
+          <FullLogoIcon />
+        </div>
+        <div className={styles.perfilDrawer}>
+          <h2>Bem-vindo, {userData?.name}</h2>
+          {/* <MyDrawer /> */}
+        </div>
+        <div className={styles.perfilInformations}>
+          <Link href="perfil/owner_update">
+            <Button
+              className={styles.perfilBtn}
+              variant="outlined"
+              color="primary"
+              endIcon={<ArrowForwardIcon />}
+            >
+              Dados pessoais
+            </Button>
+          </Link>
+          <Link href="perfil/infoBusiness_update">
+            <Button
+              className={styles.perfilBtn}
+              variant="outlined"
+              color="primary"
+              endIcon={<ArrowForwardIcon />}
+            >
+              Dados da empresa
+            </Button>
+          </Link>
+          <Link href="perfil/addressBusiness_update">
+            <Button
+              className={styles.perfilBtn}
+              variant="outlined"
+              color="primary"
+              endIcon={<ArrowForwardIcon />}
+            >
+              Endereço da empresa
+            </Button>
+          </Link>
+          <Link href="perfil/detailsBusiness_update">
+            <Button
+              className={styles.perfilBtn}
+              variant="outlined"
+              color="primary"
+              endIcon={<ArrowForwardIcon />}
+            >
+              Foto e horários
+            </Button>
+          </Link>
+        </div>
+        <button onClick={() => signOut()}>Logout</button>
+        <button onClick={() => Router.push('./schedule')}>Agenda</button>
       </div>
-      <div className={styles.perfilDrawer}>
-        <h2>{userData?.name}</h2>
-        {/* <MyDrawer /> */}
-      </div>
-      <div className={styles.perfilInformations}>
-        <Link href="perfil/owner_update">
-          <Button
-            className={styles.perfilBtn}
-            variant="outlined"
-            color="primary"
-            endIcon={<ArrowForwardIcon />}
-          >
-            Dados pessoais
-          </Button>
-        </Link>
-        <Link href="perfil/infoBusiness_update">
-          <Button
-            className={styles.perfilBtn}
-            variant="outlined"
-            color="primary"
-            endIcon={<ArrowForwardIcon />}
-          >
-            Dados da empresa
-          </Button>
-        </Link>
-        <Link href="perfil/addressBusiness_update">
-          <Button
-            className={styles.perfilBtn}
-            variant="outlined"
-            color="primary"
-            endIcon={<ArrowForwardIcon />}
-          >
-            Endereço da empresa
-          </Button>
-        </Link>
-        <Link href="perfil/detailsBusiness_update">
-          <Button
-            className={styles.perfilBtn}
-            variant="outlined"
-            color="primary"
-            endIcon={<ArrowForwardIcon />}
-          >
-            Foto e horários
-          </Button>
-        </Link>
-      </div>
-      <button onClick={() => signOut()}>Logout</button>
-      <button onClick={() => Router.push('./schedule')}>Agenda</button>
     </div>
   )
 }

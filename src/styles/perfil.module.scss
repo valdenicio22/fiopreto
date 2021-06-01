@@ -1,8 +1,19 @@
 .perfilContainer {
+  padding: 2.3rem 1.5rem 2.3rem;
+
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  padding: 2.5rem 1.5rem;
+  .perfilContent {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    width: min(100%, 310px);
+    height: 380px;
+  }
 
   .perfilHeader {
     display: flex;
@@ -10,7 +21,7 @@
   }
   .perfilDrawer {
     width: 100%;
-    margin: 1.5rem 0 3.25rem;
+    margin: 3.25rem 0 3.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
