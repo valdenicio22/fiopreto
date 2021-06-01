@@ -1,13 +1,6 @@
 import React from 'react'
 
-import {
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 
 import { useFormik } from 'formik'
 import * as yup from 'yup'

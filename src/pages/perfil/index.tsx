@@ -34,14 +34,16 @@ export default function Perfil() {
             Dados pessoais
           </Button>
         </Link>
-        <Button
-          className={styles.perfilBtn}
-          variant="outlined"
-          color="primary"
-          endIcon={<ArrowForwardIcon />}
-        >
-          Dados da empresa
-        </Button>
+        <Link href="perfil/infoBusiness_update">
+          <Button
+            className={styles.perfilBtn}
+            variant="outlined"
+            color="primary"
+            endIcon={<ArrowForwardIcon />}
+          >
+            Dados da empresa
+          </Button>
+        </Link>
         <Button
           className={styles.perfilBtn}
           variant="outlined"

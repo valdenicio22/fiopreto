@@ -1,6 +1,9 @@
+import React from 'react'
 import { useRouter } from 'next/router'
-import * as React from 'react'
+
+import { InfoBusiness } from '../../components/UpdateForms/InfoBusiness'
 import { Owner } from '../../components/UpdateForms/Owner'
+
 import { UserLoggedContext } from '../../contexts/UserLoggedContext'
 
 export default function FormEdit() {
@@ -23,7 +26,13 @@ export default function FormEdit() {
         userUpdateLoading={userUpdateLoading}
       />
     ),
-    details_business: <div>Novo form</div>,
+    infoBusiness_update: (
+      <InfoBusiness />
+      // initialValues={userData}
+      // updateUser={updateUserData}
+      // userUpdateLoading={userUpdateLoading}
+      // />
+    ),
   }
 
   const form = currentFormName && forms[currentFormName]

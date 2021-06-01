@@ -1,19 +1,17 @@
+import React from 'react'
+import Router from 'next/router'
 import { TextField } from '@material-ui/core'
 
 import { useFormik } from 'formik'
-import { useContext } from 'react'
 import * as yup from 'yup'
-import { SignUpContext } from '../../contexts/SignUpContext'
 import { maskJs } from 'mask-js'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import styles from './styles.module.scss'
-import { RightButton } from '../Buttons'
+import { LeftButton, RightButton } from '../Buttons'
+
+import { UserLoggedContext } from '../../contexts/UserLoggedContext'
 
 const handlePhoneMask = (value) => {
-  // console.log(value);
-  // if (value.length < 15) {
-  //   return maskJs('(99) 9999-9999', value.replace(/[^0-9]/g, ''));
-  // }
   return maskJs('(99)99999-9999', value.replace(/[^0-9]/g, ''))
 }
 
@@ -37,21 +35,22 @@ const validationSchema = yup.object({
 })
 
 export const InfoBusiness = () => {
-  const { salonData, setSalonData, handleNext } = useContext(SignUpContext)
+  const { salonData, setSalonData } = React.useContext(UserLoggedContext)
 
   const formik = useFormik({
     initialValues: {
-      businessName: salonData.businessName,
+      businessName: salonData.name,
       cnpj: salonData.cnpj,
-      phoneNumber: salonData.phoneNumber,
-      website: salonData.website,
+      phoneNumber: salonData.phone,
+      website: salonData.site,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setSalonData({ ...salonData, ...values })
-      handleNext()
     },
   })
+
+  console.log({ salonData })
 
   return (
     <form className={styles.formContainer} onSubmit={formik.handleSubmit}>
@@ -114,7 +113,8 @@ export const InfoBusiness = () => {
         />
       </div>
       <footer className={styles.buttons}>
-        <RightButton endIcon={<ArrowForwardIcon />}>Próximo</RightButton>
+        <LeftButton onClick={() => Router.push('/perfil')}>Voltar</LeftButton>
+        <RightButton>Atualizar</RightButton>
       </footer>
     </form>
   )
