@@ -13,6 +13,8 @@ import { UserLoggedContext } from '../../contexts/UserLoggedContext'
 
 import { signOut } from '../../contexts/AuthContext'
 import Router from 'next/router'
+import { MyDrawer } from '../../components/MyDrawer'
+import MenuOpenIcon from '@material-ui/icons/MenuOpen'
 
 export default function Perfil() {
   const { userData } = React.useContext(UserLoggedContext)
@@ -25,7 +27,7 @@ export default function Perfil() {
         </div>
         <div className={styles.perfilDrawer}>
           <h2>Bem-vindo, {userData?.name}</h2>
-          {/* <MyDrawer /> */}
+          <MyDrawer />
         </div>
         <div className={styles.perfilInformations}>
           <Link href="perfil/owner_update">
