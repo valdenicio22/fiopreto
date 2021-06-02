@@ -191,8 +191,6 @@ const UserLoggedContextProvider = ({
     return api
       .put(`/salon/${salonData.id}`, salonDataPut)
       .then(({ data }) => {
-        console.log({ data })
-
         setSalonData({
           closing: data.closing,
           cnpj: data.cnpj,
@@ -221,13 +219,9 @@ const UserLoggedContextProvider = ({
   }
 
   function updateSalonData(newSalonData: SalonData) {
-    // console.log('Antes do fatorar', newSalonData)
     const salonDataPut = convertToSalonDataPut(newSalonData)
-    // console.log('Depois do fatorar', salonDataPut)
     sendSalonData(salonDataPut)
   }
-
-  console.log('Salao ATUAL ---- ', salonData)
 
   return (
     <UserLoggedContext.Provider
