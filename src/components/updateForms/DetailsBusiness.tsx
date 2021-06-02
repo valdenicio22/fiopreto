@@ -30,7 +30,7 @@ export const DetailsBusiness = () => {
     img: salonData?.img,
     key_img: salonData?.key_img,
   })
-
+  console.log('dhkjahdkhsadkkasd')
   const formik = useFormik({
     initialValues: {
       opening: salonData?.opening,
