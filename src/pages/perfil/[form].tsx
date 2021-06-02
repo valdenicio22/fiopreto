@@ -2,10 +2,10 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import { Owner } from '../../components/UpdateForms/Owner'
-import { InfoBusiness } from '../../components/UpdateForms/InfoBusiness'
-import { AddressBusiness } from '../../components/UpdateForms/AddressBusiness'
-import { DetailsBusiness } from '../../components/UpdateForms/DetailsBusiness'
+import { Owner } from '../../components/updateForms/Owner'
+import { InfoBusiness } from '../../components/updateForms/InfoBusiness'
+import { AddressBusiness } from '../../components/updateForms/AddressBusiness'
+import { DetailsBusiness } from '../../components/updateForms/DetailsBusiness'
 
 import { UserLoggedContext } from '../../contexts/UserLoggedContext'
 
