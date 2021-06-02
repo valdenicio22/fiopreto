@@ -6,7 +6,7 @@ import { AddressBusiness } from '../components/SignupSteps/AddressBusiness'
 import { DetailsBusiness } from '../components/SignupSteps/DetailsBusiness'
 import { SignUpContext } from '../contexts/SignUpContext'
 
-import styles from '../styles/SignUp.module.scss'
+import styles from '../styles/signup.module.scss'
 import { FullLogoIcon } from '../components/Icons'
 import { GetServerSideProps } from 'next'
 import { withSSRGuest } from '../utils/withSSRGuest'
