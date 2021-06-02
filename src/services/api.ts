@@ -17,7 +17,7 @@ api.interceptors.response.use(
   },
   (error: AxiosError) => {
     if (error.response.status === 401) {
-      signOut()
+      // signOut()
     }
 
     return Promise.reject(error)

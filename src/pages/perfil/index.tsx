@@ -18,6 +18,7 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen'
 
 export default function Perfil() {
   const { userData } = React.useContext(UserLoggedContext)
+  const [openDrawer, setOpenDrawer] = React.useState(false)
 
   return (
     <div className={styles.perfilContainer}>
@@ -71,8 +72,6 @@ export default function Perfil() {
             </Button>
           </Link>
         </div>
-        <button onClick={() => signOut()}>Logout</button>
-        <button onClick={() => Router.push('./schedule')}>Agenda</button>
       </div>
     </div>
   )

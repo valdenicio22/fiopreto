@@ -18,7 +18,7 @@ const validationSchema = yup.object({
 })
 
 export default function Login() {
-  const { signIn } = React.useContext(AuthContext)
+  const { signIn, error } = React.useContext(AuthContext)
 
   const formik = useFormik({
     initialValues: {
@@ -66,6 +66,7 @@ export default function Login() {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
+        {error && <span>Senha ou email invalidos</span>}
         <Button
           className={styles.btnSubmit}
           size="large"

@@ -18,6 +18,7 @@ interface AuthContextData {
   signIn(credentials: SignInCredentials): Promise<void>
   user: User
   isAuthenticated: boolean
+  error: boolean
 }
 
 interface AuthProviderProps {
@@ -43,6 +44,7 @@ const parseJwt = (token: string) => {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = React.useState<User>()
   const isAuthenticated = !!user
+  const [error, setError] = React.useState(false)
 
   React.useEffect(() => {
     const { 'fiopreto.token': token } = parseCookies()
@@ -76,15 +78,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setUser(parsedToken.sub)
 
       api.defaults.headers['Authorization'] = `Bearer ${token}`
-
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaa')
       Router.push('/perfil')
+      setError(false)
     } catch (err) {
-      console.log(err)
+      console.log({ err })
+      setError(true)
     }
   }
   console.log({ user })
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
+    <AuthContext.Provider value={{ signIn, isAuthenticated, user, error }}>
       {children}
     </AuthContext.Provider>
   )

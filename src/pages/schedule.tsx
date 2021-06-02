@@ -4,6 +4,7 @@ import { api } from '../services/api'
 import styles from '../styles/schedule.module.scss'
 import { FullLogoIcon } from '../components/Icons'
 import { DailySchedule } from '../components/DailySchedule'
+import { MyDrawer } from '../components/MyDrawer'
 // import MyDrawer from '../components/MyDrawer'
 
 type Schedule = {
@@ -39,8 +40,7 @@ const StaticDatePicker = () => {
         <FullLogoIcon />
         <div className={styles.agendaDrawer}>
           <h2>Minha Agenda</h2>
-          <p>Drawer</p>
-          {/* <MyDrawer /> */}
+          <MyDrawer />
         </div>
         <DatePicker
           disableToolbar

@@ -7,6 +7,8 @@ import {
   ListItemIcon,
 } from '@material-ui/core'
 import MenuOpenIcon from '@material-ui/icons/MenuOpen'
+import Link from 'next/link'
+import { signOut } from '../../contexts/AuthContext'
 
 export const MyDrawer = () => {
   const [openDrawer, setOpenDrawer] = React.useState(false)
@@ -22,18 +24,22 @@ export const MyDrawer = () => {
       >
         <List>
           <ListItem button>
-            <ListItemIcon>
-              <ListItemText>Agenda</ListItemText>
-            </ListItemIcon>
+            <Link href="./schedule">
+              <ListItemIcon>
+                <ListItemText>Agenda</ListItemText>
+              </ListItemIcon>
+            </Link>
           </ListItem>
 
           <ListItem divider button>
-            <ListItemIcon>
-              <ListItemText>Perfil</ListItemText>
-            </ListItemIcon>
+            <Link href="./perfil">
+              <ListItemIcon>
+                <ListItemText>Perfil</ListItemText>
+              </ListItemIcon>
+            </Link>
           </ListItem>
 
-          <ListItem divider button>
+          <ListItem button onClick={() => signOut()}>
             <ListItemIcon>
               <ListItemText>Logout</ListItemText>
             </ListItemIcon>
